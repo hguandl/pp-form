@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import './App.css';
-import { Popover, Typography, Rate, Menu, Card } from 'antd';
+import { Popover, Typography, Rate, Menu, Card, Button } from 'antd';
 
 type RateState = [Map<string, number>, React.Dispatch<React.SetStateAction<Map<string, number>>>];
 
@@ -68,6 +68,22 @@ function App() {
         <Card title={"Result"} bordered={false}>
           {resultEntry(rates)}
         </Card>
+
+        <Button style={{ margin: 12 }} onClick={() => {
+          fetch('/api/submit', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(Object.fromEntries(rates))
+          });
+        }}>Submit</Button>
+
+        <Typography style={{ backgroundColor: 'white' }}>
+          <Paragraph>
+            {JSON.stringify(Object.fromEntries(rates))}
+          </Paragraph>
+        </Typography>
       </div>
     </div>
   );
